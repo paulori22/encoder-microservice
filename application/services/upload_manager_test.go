@@ -38,7 +38,7 @@ func TestVideoServiceUpload(t *testing.T) {
 	videoUpload.VideoPath = videoService.VideoFolderPath()
 
 	doneUpload := make(chan string)
-	videoUpload.ProcessUpload(50, doneUpload)
+	go videoUpload.ProcessUpload(50, doneUpload)
 
 	result := <-doneUpload
 	require.Equal(t, result, "upload completed")

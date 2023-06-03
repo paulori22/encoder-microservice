@@ -86,13 +86,19 @@ func (vu *VideoUpload) ProcessUpload(concurrency int, doneUpload chan string) er
 		for x := 0; x < len(vu.Paths); x++ {
 			in <- x
 		}
-		close(in)
 	}()
 
+	countDoneWorker := 0
 	for r := range returnChannel {
+		countDoneWorker++
+
 		if r != "" {
 			doneUpload <- r
 			break
+		}
+
+		if countDoneWorker == len(vu.Paths) {
+			close(in)
 		}
 	}
 
