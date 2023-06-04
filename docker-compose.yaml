@@ -2,11 +2,13 @@ version: '3'
 
 services:
   app:
+    container_name: app
     build: .
     volumes:
       - .:/go/src
       
   db:
+    container_name: db
     image: postgres:9.4
     restart: always
     tty: true
@@ -19,6 +21,7 @@ services:
       - "5432:5432"
 
   rabbit:
+    container_name: rabbit
     image: "rabbitmq:3-management"
     environment:
       RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
